@@ -36,6 +36,9 @@ class PaymentsController < ApplicationController
   def accept
   end
 
+  def success
+  end
+
 # Doc sample code below, just run without rails to simulate a successful transaction
 require 'rubygems'
   require 'yaml'
@@ -69,7 +72,7 @@ require 'rubygems'
     
     setting3 = SettingType.new
     setting3.settingName = SettingNameEnum::HostedPaymentIFrameCommunicatorUrl
-    setting3.settingValue = "{\"url\": \"https://stark-fjord-22096.herokuapp.com/get_accept\"}"
+    setting3.settingValue = "{\"url\": \"https://stark-fjord-22096.herokuapp.com/success\"}"
 
     settings = Settings.new([ setting1, setting2, setting3])
     

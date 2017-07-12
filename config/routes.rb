@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   get '/get_accept' => 'payments#get_an_accept_payment_page'
   get '/subscribe' => 'payments#create_Subscription'
+  get '/sign_success' => 'payments#success'
 end
