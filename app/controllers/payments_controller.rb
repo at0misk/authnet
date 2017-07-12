@@ -68,7 +68,7 @@ require 'rubygems'
     setting3.settingValue = "{\"cardCodeRequired\": true}"
     
     setting3 = SettingType.new
-    setting3.settingName= SettingNameEnum::hostedPaymentIFrameCommunicatorUrl
+    setting3.settingName= SettingNameEnum::HostedPaymentIFrameCommunicatorUrl
     setting3.settingValue = "{\"url\": https://google.com}"
 
     settings = Settings.new([ setting1, setting2, setting3])
