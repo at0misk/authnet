@@ -1,0 +1,8 @@
+default:
+  api_login_id: 9CPC3p3r8J
+  api_transaction_key: 6Ysv3q8Ham2448KG
+  merchant_hash_value: pbdg0135
+
+development: 
+test: 
+production: 

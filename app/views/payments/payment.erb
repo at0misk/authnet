@@ -1,0 +1,17 @@
+<!-- !!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!!!!! -->
+<!-- Change TEST to LIVE in :url when in production -->
+<%= form_for :sim_transaction, :url => AuthorizeNet::SIM::Transaction::Gateway::TEST do |f| %>
+  <%= sim_fields(@sim_transaction) %>
+  <%= label_tag 'x_amount', "Total: #{number_to_currency(@amount)}" %>
+  <%= label_tag 'x_card_num', 'Credit Card Number'%>
+  <%= text_field_tag 'x_card_num' %>
+  <%= label_tag 'x_exp_date', 'Expiration Date (MMYY)'%>
+  <%= text_field_tag 'x_exp_date' %>
+  <%= label_tag 'x_card_num', 'CVV'%>
+  <%= text_field_tag 'x_card_code' %>
+  <%= label_tag 'x_first_name', 'First Name'%>
+  <%= text_field_tag 'x_first_name' %>
+  <input type="hidden" name="x_last_name" value="Taylor">
+  <br />
+  <%= f.submit 'Purchase'%>
+<% end %>
