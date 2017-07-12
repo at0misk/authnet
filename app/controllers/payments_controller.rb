@@ -64,11 +64,11 @@ require 'rubygems'
     setting2.settingValue = "{\"show\": false}"
 
     setting3 = SettingType.new
-    setting3.settingName= SettingNameEnum::HostedPaymentPaymentOptions
+    setting3.settingName = SettingNameEnum::HostedPaymentPaymentOptions
     setting3.settingValue = "{\"cardCodeRequired\": true}"
     
     setting3 = SettingType.new
-    setting3.settingName= SettingNameEnum::HostedPaymentIFrameCommunicatorUrl
+    setting3.settingName = SettingNameEnum::HostedPaymentIFrameCommunicatorUrl
     setting3.settingValue = "{\"url\": https://stark-fjord-22096.herokuapp.com/get_accept}"
 
     settings = Settings.new([ setting1, setting2, setting3])
