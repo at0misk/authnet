@@ -19,7 +19,12 @@ function callParentFunction(str) {
 function receiveMessage(event) {
   if (event && event.data) {
     callParentFunction(event.data);
+    for(var x = 0; x < event.data.length; x++){
+    	console.log(x);
+    	console.log(event.data[x]);
+    }
     console.log("recieved");
+    console.log(event.trans_id)
     console.log(event)
   }
 }
