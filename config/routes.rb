@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   get '/get_accept' => 'payments#get_an_accept_payment_page'
   get '/subscribe' => 'payments#create_Subscription'
   get '/sign_success' => 'payments#success'
+  root 'payments#get_an_accept_payment_page'
 end
