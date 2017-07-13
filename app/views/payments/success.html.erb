@@ -29,11 +29,11 @@
             callParentFunction(event.data);
             params = parseQueryString(event.data);
             var p = params['response'];
-            console.log(typeOf(p));
-            console.log(p['transId']);
             function typeOf (obj) {
 			  return {}.toString.call(obj).split(' ')[1].slice(0, -1).toLowerCase();
 			}
+            console.log(typeOf(p));
+            console.log(p['transId']);
 			// var transResponse = JSON.parse(params['response']);
 			// console.log(transResponse);
         }
