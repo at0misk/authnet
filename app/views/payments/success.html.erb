@@ -1,6 +1,5 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script type="text/javascript">
-var p = ""
     function parseQueryString(str) {
         var vars = [];
         var arr = str.split('&');
@@ -30,7 +29,6 @@ var p = ""
             callParentFunction(event.data);
             params = parseQueryString(event.data);
             console.log(params['response']);
-            p = params['response'];
 			// var transResponse = JSON.parse(params['response']);
 			// console.log(transResponse);
         }
