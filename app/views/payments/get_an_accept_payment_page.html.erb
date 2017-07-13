@@ -21,6 +21,7 @@ function receiveMessage(event) {
     callParentFunction(event.data);
     console.log("recieved");
     // Try to target the iframe and get the id that way..
+    window.CommunicationHandler = {};
 	CommunicationHandler.onReceiveCommunication = function (argument) {
 	params = parseQueryString(argument.qstr)
 	var transResponse = JSON.parse(params['response']);
