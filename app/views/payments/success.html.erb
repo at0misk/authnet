@@ -18,9 +18,7 @@
 
         if (event && event.data) {
             callParentFunction(event.data);
-            console.log(event.data);
-            var transResponse = JSON.parse(event.data);
-            console.log(transResponse.transId);
+            console.log(event.data[0]);
         }
 
     }
