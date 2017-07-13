@@ -28,7 +28,7 @@
         if (event && event.data) {
             callParentFunction(event.data);
             params = parseQueryString(event.data);
-            console.log(params['response']['transId']);
+            console.log(params['response'][0]);
 			// var transResponse = JSON.parse(params['response']);
 			// console.log(transResponse);
         }
