@@ -1,6 +1,15 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script type="text/javascript">
-
+    function parseQueryString(str) {
+        var vars = [];
+        var arr = str.split('&');
+        var pair;
+        for (var i = 0; i < arr.length; i++) {
+            pair = arr[i].split('=');
+            vars[pair[0]] = unescape(pair[1]);
+        }
+        return vars;
+    }
 
 	function callParentFunction(str) {
 
@@ -18,7 +27,9 @@
 
         if (event && event.data) {
             callParentFunction(event.data);
-            console.log(event.data[0]);
+            params = parseQueryString(event.data);
+			var transResponse = JSON.parse(params['response']);
+			console.log(transResponse);
         }
 
     }
