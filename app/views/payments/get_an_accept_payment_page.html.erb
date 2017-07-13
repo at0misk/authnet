@@ -8,6 +8,13 @@ Token is generated from the route for this view, that token gets passed to this 
 <script type="text/javascript">
 //<![CDATA[
 window.CommunicationHandler = {};
+
+window.parent.parent.CommunicationHandler.onReceiveCommunication = function (argument) {
+	params = parseQueryString(argument.qstr)
+	var transResponse = JSON.parse(params['response']);
+	console.log(transResponse);
+}
+
  function callParentFunction(str) {
    if (str && str.length > 0 && window.parent && window.parent.parent 
      && window.parent.parent.CommunicationHandler && window.parent.parent.CommunicationHandler.onReceiveCommunication)
