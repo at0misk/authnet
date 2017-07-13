@@ -28,7 +28,8 @@ $(document).ready(function(){
         console.log('communication handler enter');
 
         var params = parseQueryString(argument.qstr)
-
+        console.log(params);
+        
         switch(params['action']){
             case "resizeWindow"     :
 
