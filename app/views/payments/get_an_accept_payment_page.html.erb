@@ -10,7 +10,6 @@ Token is generated from the route for this view, that token gets passed to this 
 window.CommunicationHandler = {};
 
 window.parent.parent.CommunicationHandler.onReceiveCommunication = function (argument) {
-	params = parseQueryString(argument.qstr)
 	var transResponse = JSON.parse(params['response']);
 	console.log(transResponse);
 }
