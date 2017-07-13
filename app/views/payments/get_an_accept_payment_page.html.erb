@@ -25,7 +25,7 @@ function receiveMessage(event) {
 	CommunicationHandler.onReceiveCommunication = function (argument) {
 	params = parseQueryString(argument.qstr)
 	var transResponse = JSON.parse(params['response']);
-	puts transResponse;
+	console.log(transResponse);
 	}
 	CommunicationHandler.onReceiveCommunication(event);
     console.log(message.transId)
