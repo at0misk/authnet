@@ -33,7 +33,8 @@
 			  return {}.toString.call(obj).split(' ')[1].slice(0, -1).toLowerCase();
 			}
             console.log(typeOf(p));
-            console.log(p['transId']);
+            var transResponse = JSON.parse(p);
+            console.log(transResponse);
 			// var transResponse = JSON.parse(params['response']);
 			// console.log(transResponse);
         }
