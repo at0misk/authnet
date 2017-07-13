@@ -28,8 +28,9 @@
         if (event && event.data) {
             callParentFunction(event.data);
             params = parseQueryString(event.data);
-			var transResponse = JSON.parse(params['response']);
-			console.log(transResponse);
+            console.log(params);
+			// var transResponse = JSON.parse(params['response']);
+			// console.log(transResponse);
         }
 
     }
