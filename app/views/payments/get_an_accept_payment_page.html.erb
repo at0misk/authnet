@@ -7,26 +7,21 @@
 Token is generated from the route for this view, that token gets passed to this form url, that form post returns the form to send to authorize
 <script type="text/javascript">
 //<![CDATA[
-function callParentFunction(str) {
-  if (str && str.length > 0 && window.parent && window.parent.parent 
-    && window.parent.parent.AuthorizeNetPopup && window.parent.parent.AuthorizeNetPopup.onReceiveCommunication)
-  {
-    window.parent.parent.AuthorizeNetPopup.onReceiveCommunication(str);
-    // If you get an error with this line, it might be because the domains are not an exact match (including www).
-  }
-}
+window.CommunicationHandler = {};
+ function callParentFunction(str) {
+   if (str && str.length > 0 && window.parent && window.parent.parent 
+     && window.parent.parent.CommunicationHandler && window.parent.parent.CommunicationHandler.onReceiveCommunication)
+   {
+      var referrer = document.referrer;
+      window.parent.parent.CommunicationHandler.onReceiveCommunication({qstr : str , parent : referrer});
+   }
+ }
 
 function receiveMessage(event) {
   if (event && event.data) {
     callParentFunction(event.data);
     console.log("recieved");
     // Try to target the iframe and get the id that way..
-    window.CommunicationHandler = {};
-	CommunicationHandler.onReceiveCommunication = function (argument) {
-	params = parseQueryString(argument.qstr)
-	var transResponse = JSON.parse(params['response']);
-	console.log(transResponse);
-	}
 	CommunicationHandler.onReceiveCommunication(event);
     console.log(message.transId)
     console.log(event)
