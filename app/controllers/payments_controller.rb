@@ -72,9 +72,13 @@ require 'rubygems'
     
     setting3 = SettingType.new
     setting3.settingName = SettingNameEnum::HostedPaymentIFrameCommunicatorUrl
-    setting3.settingValue = "{\"url\": \"https://stark-fjord-22096.herokuapp.com/get_accept\"}"
+    setting3.settingValue = "{\"url\": \"https://stark-fjord-22096.herokuapp.com/success\"}"
 
-    settings = Settings.new([ setting1, setting2, setting3])
+    setting4 = SettingType.new
+    setting4.settingName = SettingNameEnum::HostedPaymentReturnOptions
+    setting4.settingValue = "{\"showReceipt\": false}"
+
+    settings = Settings.new([ setting1, setting2, setting3, setting4])
     
     request = GetHostedPaymentPageRequest.new
     request.transactionRequest = transactionRequest

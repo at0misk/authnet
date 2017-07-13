@@ -28,6 +28,7 @@ $(document).ready(function(){
         console.log('communication handler enter');
 
         var params = parseQueryString(argument.qstr)
+
         switch(params['action']){
             case "resizeWindow"     :
 
@@ -48,8 +49,6 @@ $(document).ready(function(){
                 console.log('transaction complete');
 
                 var transResponse = JSON.parse(params['response']);
-
-                console.log(transResponse);
 
                 window.location.href = '/checkout/complete';
 

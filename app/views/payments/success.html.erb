@@ -1,0 +1,82 @@
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    function parseQueryString(str) {
+        var vars = [];
+        var arr = str.split('&');
+        var pair;
+        for (var i = 0; i < arr.length; i++) {
+            pair = arr[i].split('=');
+            vars[pair[0]] = unescape(pair[1]);
+        }
+        return vars;
+    }
+
+    window.CommunicationHandler.onReceiveCommunication = function (argument) {
+
+        console.log('communication handler enter');
+
+        var params = parseQueryString(argument.qstr)
+        console.log(params);
+        switch(params['action']){
+            case "resizeWindow"     :
+
+                console.log('resize'); break;
+
+            case "successfulSave"   :
+
+                console.log('save'); break;
+
+            case "cancel"           :
+
+                console.log('cancel'); break;
+
+            case "transactResponse" :
+
+                sessionStorage.removeItem("HPTokenTime");
+
+                console.log('transaction complete');
+
+                var transResponse = JSON.parse(params['response']);
+
+                window.location.href = '/checkout/complete';
+
+        }
+    }
+
+	function callParentFunction(str) {
+
+        if (str && str.length > 0 && window.parent.parent
+            && window.parent.parent.CommunicationHandler && window.parent.parent.CommunicationHandler.onReceiveCommunication) {
+
+            var referrer = document.referrer;
+            window.parent.parent.CommunicationHandler.onReceiveCommunication({qstr : str , parent : referrer});
+
+        }
+
+    }
+
+    function receiveMessage(event) {
+
+        if (event && event.data) {
+            callParentFunction(event.data);
+        }
+
+    }
+
+    if (window.addEventListener) {
+
+        window.addEventListener("message", receiveMessage, false);
+
+    } else if (window.attachEvent) {
+
+        window.attachEvent("onmessage", receiveMessage);
+
+    }
+
+    if (window.location.hash && window.location.hash.length > 1) {
+
+        callParentFunction(window.location.hash.substring(1));
+
+    }
+
+</script>
