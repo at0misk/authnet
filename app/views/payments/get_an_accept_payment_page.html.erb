@@ -7,42 +7,57 @@
 Token is generated from the route for this view, that token gets passed to this form url, that form post returns the form to send to authorize
 <script type="text/javascript">
 //<![CDATA[
-window.CommunicationHandler = {};
+$(document).ready(function(){
 
-window.parent.parent.CommunicationHandler.onReceiveCommunication = function (argument) {
-	var transResponse = JSON.parse(params['response']);
-	console.log(transResponse);
-}
+    window.CommunicationHandler = {};
 
- function callParentFunction(str) {
-   if (str && str.length > 0 && window.parent && window.parent.parent 
-     && window.parent.parent.CommunicationHandler && window.parent.parent.CommunicationHandler.onReceiveCommunication)
-   {
-      var referrer = document.referrer;
-      window.parent.parent.CommunicationHandler.onReceiveCommunication({qstr : str , parent : referrer});
-   }
- }
+    function parseQueryString(str) {
+        var vars = [];
+        var arr = str.split('&');
+        var pair;
+        for (var i = 0; i < arr.length; i++) {
+            pair = arr[i].split('=');
+            vars[pair[0]] = unescape(pair[1]);
+        }
+        return vars;
+    }
 
-function receiveMessage(event) {
-  if (event && event.data) {
-    callParentFunction(event.data);
-    console.log("recieved");
-    // Try to target the iframe and get the id that way..
-	CommunicationHandler.onReceiveCommunication(event);
-    console.log(message.transId)
-    console.log(event)
-    console.log(message)
-  }
-}
+    window.CommunicationHandler.onReceiveCommunication = function (argument) {
 
-if (window.addEventListener) {
-  window.addEventListener("message", receiveMessage, false);
-} else if (window.attachEvent) {
-  window.attachEvent("onmessage", receiveMessage);
-}
+        console.log('communication handler enter');
 
-if (window.location.hash && window.location.hash.length > 1) {
-  callParentFunction(window.location.hash.substring(1));
-}
+        var params = parseQueryString(argument.qstr)
+
+        switch(params['action']){
+            case "resizeWindow"     :
+
+                console.log('resize'); break;
+
+            case "successfulSave"   :
+
+                console.log('save'); break;
+
+            case "cancel"           :
+
+                console.log('cancel'); break;
+
+            case "transactResponse" :
+
+                sessionStorage.removeItem("HPTokenTime");
+
+                console.log('transaction complete');
+
+                var transResponse = JSON.parse(params['response']);
+
+                window.location.href = '/checkout/complete';
+
+        }
+    }
+
+    //send the token
+    $('#send_hptoken').submit();
+
+
+});
 //]]>
 </script>
