@@ -207,7 +207,8 @@ def create_profile()
         raise "Failed to create a subscription"
       end
     end
-    return response
+    flash[:success] = "Subscription Created"
+    redirect_to '/'
   end
 
 end
