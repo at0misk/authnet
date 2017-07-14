@@ -39,10 +39,14 @@
             var transResponse = JSON.parse(p);
             console.log(transResponse);
             console.log(transResponse['transId']);
-            $.get("https://stark-fjord-22096.herokuapp.com/create_profile/" + transResponse['transId'], function(data, status){
-            	console.log("CALLBACK CALLED");
-        		console.log(status);
-    		});
+			$.ajax({
+			  type: "GET",
+			  url: "https://stark-fjord-22096.herokuapp.com/create_profile/" + transResponse['transId'],
+			  cache: false,
+			  success: function(data){
+			     console.log("CALLED")
+			  }
+			});
             // Use this to make a profile / subscription
             // createCustomerProfileFromTransactionRequest API call with the transactionId
             // and then create a subscription with an ARBCreateSubscriptionRequest using the customerProfileId and customerPaymentProfileId.
