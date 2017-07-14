@@ -118,7 +118,7 @@ def create_profile()
 
     if response.messages.resultCode == MessageTypeEnum::Ok
       puts "Successfully created a customer profile from the transaction id #{response.customerProfileId}"
-      redirect_to "/create_subscription/#{response.customerProfileId}/#{@paymentId}" and return
+      redirect_to "/create_subscription/#{response.customerProfileId}/#{@paymentId}"
     else
       puts response.messages.messages[0].text
       raise "Failed to create a customer profile from an existing transaction."
