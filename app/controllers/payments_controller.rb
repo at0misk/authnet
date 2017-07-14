@@ -183,20 +183,20 @@ end
     return response
   end
 
-def create_customer_profile_from_a_transaction()
+def create_profile()
     config = YAML.load_file(File.dirname(__FILE__) + "/../credentials.yml")
 
     transaction = Transaction.new('8e9bG3YDG843', '7aV3ru72Wp9rn5Xc', :gateway => :sandbox)
 
     
     request = CreateCustomerProfileFromTransactionRequest.new
-    request.transId = params['id']
+    request.transId = "60026612560"
   
   #You can either specify the customer information in form of customerProfileBaseType object
-  request.customer = CustomerProfileBaseType.new
-  request.customer.merchantCustomerId = "1231232"
-    request.customer.description = "This is a sample customer profile"
-    request.customer.email = "johnsnow@castleblack.com"
+  # request.customer = CustomerProfileBaseType.new
+  # request.customer.merchantCustomerId = "1231232"
+  #   request.customer.description = "This is a sample customer profile"
+  #   request.customer.email = "johnsnow@castleblack.com"
   #  OR   
   # You can just provide the customer Profile ID
   # customerProfileId = "123343" 
