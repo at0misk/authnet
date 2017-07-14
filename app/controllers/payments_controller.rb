@@ -184,7 +184,7 @@ end
   end
 
 def create_profile()
-    config = YAML.load_file(File.dirname(__FILE__) + "/../credentials.yml")
+    # config = YAML.load_file(File.dirname(__FILE__) + "/../credentials.yml")
 
     transaction = Transaction.new('8e9bG3YDG843', '7aV3ru72Wp9rn5Xc', :gateway => :sandbox)
 
