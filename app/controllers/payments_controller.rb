@@ -101,111 +101,25 @@ require 'rubygems'
     end
     # return response
   end
-  
-if __FILE__ == $0
-  get_an_accept_payment_page()
-end
-
-# Creates a subscription
-  def create_Subscription
-    # config = YAML.load_file(File.dirname(__FILE__) + "/../credentials.yml")
-  
-    transaction = Transaction.new('8e9bG3YDG843', '7aV3ru72Wp9rn5Xc', :gateway => :sandbox)
-    #subscription = Subscription.new(config['api_login_id'], config['api_subscription_key'], :gateway => :sandbox)
-  
-    request = ARBCreateSubscriptionRequest.new
-    request.refId = DateTime.now.to_s[-8]
-    request.subscription = ARBSubscriptionType.new
-    request.subscription.name = "Jane Doe"
-    request.subscription.paymentSchedule = PaymentScheduleType.new
-    request.subscription.paymentSchedule.interval = PaymentScheduleType::Interval.new("3","months")
-    request.subscription.paymentSchedule.startDate = (DateTime.now).to_s[0...10]
-    request.subscription.paymentSchedule.totalOccurrences ='12'
-    request.subscription.paymentSchedule.trialOccurrences ='1'
-
-    random_amount = ((SecureRandom.random_number + 1 ) * 150 ).round(2)
-    request.subscription.amount = random_amount
-    request.subscription.trialAmount = 0.00
-    request.subscription.payment = PaymentType.new
-    request.subscription.payment.creditCard = CreditCardType.new('4111111111111111','0120','123')
-
-    request.subscription.order = OrderType.new('invoiceNumber123','description123')
-    request.subscription.customer =  CustomerDataType.new(CustomerTypeEnum::Individual,'custId1','a@a.com')
-    request.subscription.billTo = NameAndAddressType.new('John','Doe','xyt','10800 Blue St','New York','NY','10010','USA')
-    request.subscription.shipTo = NameAndAddressType.new('John','Doe','xyt','10800 Blue St','New York','NY','10010','USA')
-
-    response = transaction.create_subscription(request)
-     
-    if response != nil
-      if response.messages.resultCode == MessageTypeEnum::Ok
-        puts "Successfully created a subscription #{response.subscriptionId}"
-    
-      else
-        #puts response.transactionResponse.errors.errors[0].errorCode
-        #puts response.transactionResponse.errors.errors[0].errorText
-        puts response.messages.messages[0].code
-        puts response.messages.messages[0].text
-        raise "Failed to create a subscription"
-      end
-    end
-    return response
-  end
-
-  def create_customer_profile()
-    # config = YAML.load_file(File.dirname(__FILE__) + "/../credentials.yml")
-
-    transaction = Transaction.new('8e9bG3YDG843', '7aV3ru72Wp9rn5Xc', :gateway => :sandbox)
-
-    
-    request = CreateCustomerProfileRequest.new
-    payment = PaymentType.new(CreditCardType.new('4111111111111111','2020-05'))
-    profile = CustomerPaymentProfileType.new(nil,nil,payment,nil,nil)
-
-    request.profile = CustomerProfileType.new('jdoe'+rand(10000).to_s,'John2 Doe',rand(10000).to_s + '@mail.com', [profile], nil)
-
-    response = transaction.create_customer_profile(request)
-
-
-    if response.messages.resultCode == MessageTypeEnum::Ok
-      puts "Successfully created aX customer profile with id:  #{response.customerProfileId}"
-      puts "Customer Payment Profile Id List:"
-      response.customerPaymentProfileIdList.numericString.each do |id|
-        puts id
-      end
-      puts "Customer Shipping Address Id List:"
-      response.customerShippingAddressIdList.numericString.each do |id|
-        puts id
-      end
-    else
-      puts response.messages.messages[0].text
-      raise "Failed to create a new customer profile."
-    end
-    return response
-  end
 
 def create_profile()
-    # config = YAML.load_file(File.dirname(__FILE__) + "/../credentials.yml")
-
     transaction = Transaction.new('8e9bG3YDG843', '7aV3ru72Wp9rn5Xc', :gateway => :sandbox)
 
     
     request = CreateCustomerProfileFromTransactionRequest.new
     request.transId = params['id']
-  
-  #You can either specify the customer information in form of customerProfileBaseType object
-  # request.customer = CustomerProfileBaseType.new
-  # request.customer.merchantCustomerId = "1231232"
-  #   request.customer.description = "This is a sample customer profile"
-  #   request.customer.email = "johnsnow@castleblack.com"
-  #  OR   
-  # You can just provide the customer Profile ID
-  # customerProfileId = "123343" 
+    request.refId = '1'
   
     response = transaction.create_customer_profile_from_transaction(request)
+    puts response.customerProfileId
+    @paymentId = response.customerPaymentProfileIdList.numericString[0]
+    puts @paymentId
+    # fail
 
 
     if response.messages.resultCode == MessageTypeEnum::Ok
       puts "Successfully created a customer profile from the transaction id #{response.customerProfileId}"
+      redirect_to "/create_subscription/#{response.customerProfileId}/#{@paymentId}"
     else
       puts response.messages.messages[0].text
       raise "Failed to create a customer profile from an existing transaction."
@@ -213,18 +127,57 @@ def create_profile()
     return response
   end
 
-
-
-  def create_subscription_from_customer_profile(profileId = "123213", paymentProfileId = "123213", addressId = "123213")
-    # config = YAML.load_file(File.dirname(__FILE__) + "/../credentials.yml")
-  
+  def get_list_of_subscriptions()
     transaction = Transaction.new('8e9bG3YDG843', '7aV3ru72Wp9rn5Xc', :gateway => :sandbox)
-    #subscription = Subscription.new(config['api_login_id'], config['api_subscription_key'], :gateway => :sandbox)
+    request = ARBGetSubscriptionListRequest.new
+    request.refId = '1'
+    
+    request.searchType = ARBGetSubscriptionListSearchTypeEnum::SubscriptionActive
+    request.sorting = ARBGetSubscriptionListSorting.new
+    request.sorting.orderBy = 'id'
+    request.sorting.orderDescending = 'false'
+    
+    request.paging = Paging.new
+    request.paging.limit = '1000'
+    request.paging.offset = '1'
+  
+  
+    response = transaction.get_subscription_list(request)
+    
+  
+    if response != nil
+      if response.subscriptionDetails.length > 0 
+        puts 'found'
+        fail
+      end
+      if response.messages.resultCode == MessageTypeEnum::Ok
+        puts "Successfully got the list of subscriptions"
+        puts response.messages.messages[0].code
+        puts response.messages.messages[0].text
+
+        response.subscriptionDetails.subscriptionDetail.each do |sub|
+          puts "Subscription #{sub.id} #{sub.name}  Status : #{sub.status}"
+          
+        end
+    
+      else
+    
+        puts response.messages.messages[0].code
+        puts response.messages.messages[0].text
+        raise "Failed to get the list of subscriptions"
+      end
+    end
+    redirect_to '/'
+ end
+
+
+  def create_subscription()
+    transaction = Transaction.new('8e9bG3YDG843', '7aV3ru72Wp9rn5Xc', :gateway => :sandbox)
   
     request = ARBCreateSubscriptionRequest.new
-    request.refId = DateTime.now.to_s[-8]
+    request.refId = '1'
     request.subscription = ARBSubscriptionType.new
-    request.subscription.name = "Jane Doe"
+    request.subscription.name = "CUSTOMER NAME:"
     request.subscription.paymentSchedule = PaymentScheduleType.new
     request.subscription.paymentSchedule.interval = PaymentScheduleType::Interval.new("3","months")
     request.subscription.paymentSchedule.startDate = (DateTime.now).to_s[0...10]
@@ -236,9 +189,10 @@ def create_profile()
     request.subscription.trialAmount = 0.00
 
   request.subscription.profile = CustomerProfileIdType.new
-  request.subscription.profile.customerProfileId = profileId
-    request.subscription.profile.customerPaymentProfileId = paymentProfileId
-    request.subscription.profile.customerAddressId = addressId
+  puts params['customerId']
+  request.subscription.profile.customerProfileId = params['customerId']
+    request.subscription.profile.customerPaymentProfileId = params['paymentId']
+    # request.subscription.profile.customerAddressId = addressId
   
     response = transaction.create_subscription(request)
 
@@ -248,8 +202,6 @@ def create_profile()
       if response.messages.resultCode == MessageTypeEnum::Ok
         puts "Successfully created a subscription #{response.subscriptionId}"
       else
-        #puts response.transactionResponse.errors.errors[0].errorCode
-        #puts response.transactionResponse.errors.errors[0].errorText
         puts response.messages.messages[0].code
         puts response.messages.messages[0].text
         raise "Failed to create a subscription"
@@ -257,15 +209,5 @@ def create_profile()
     end
     return response
   end
-
-if __FILE__ == $0
-  create_Subscription_from_customer_profile()
-end
-
-
-
-if __FILE__ == $0
-  create_Subscription()
-end
 
 end

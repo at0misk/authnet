@@ -7,5 +7,7 @@ Rails.application.routes.draw do
   get '/subscribe' => 'payments#create_Subscription'
   get '/sign_success' => 'payments#success'
   get '/create_profile/:id' => 'payments#create_profile'
+  get '/create_subscription/:customerId/:paymentId' => 'payments#create_subscription'
+  get '/get_list_of_subscriptions' => 'payments#get_list_of_subscriptions'
   root 'payments#get_an_accept_payment_page'
 end
