@@ -123,7 +123,7 @@ def create_profile()
       puts response.messages.messages[0].text
       raise "Failed to create a customer profile from an existing transaction."
     end
-    return response
+    # return response
   end
 
   def get_list_of_subscriptions()
