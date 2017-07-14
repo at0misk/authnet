@@ -27,6 +27,7 @@
 
         if (event && event.data) {
             callParentFunction(event.data);
+            console.log(event.data);
             params = parseQueryString(event.data);
             console.log(params);
             var p = params['response'];
