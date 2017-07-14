@@ -190,7 +190,7 @@ def create_profile()
 
     
     request = CreateCustomerProfileFromTransactionRequest.new
-    request.transId = "60026612560"
+    request.transId = params['id']
   
   #You can either specify the customer information in form of customerProfileBaseType object
   # request.customer = CustomerProfileBaseType.new
