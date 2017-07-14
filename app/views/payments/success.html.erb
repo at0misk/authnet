@@ -28,7 +28,9 @@
         if (event && event.data) {
             callParentFunction(event.data);
             params = parseQueryString(event.data);
+            console.log(params);
             var p = params['response'];
+            console.log(p);
             function typeOf (obj) {
 			  return {}.toString.call(obj).split(' ')[1].slice(0, -1).toLowerCase();
 			}

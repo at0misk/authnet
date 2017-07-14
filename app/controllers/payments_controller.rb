@@ -78,7 +78,11 @@ require 'rubygems'
     setting4.settingName = SettingNameEnum::HostedPaymentReturnOptions
     setting4.settingValue = "{\"showReceipt\": false}"
 
-    settings = Settings.new([ setting1, setting2, setting3, setting4])
+    setting5 = SettingType.new
+    setting5.settingName = SettingNameEnum::HostedPaymentCustomerOptions
+    setting5.settingValue = "{\"showEmail\": true, \"requiredEmail\": true,}"
+
+    settings = Settings.new([ setting1, setting2, setting3, setting4, setting5])
     
     request = GetHostedPaymentPageRequest.new
     request.transactionRequest = transactionRequest
