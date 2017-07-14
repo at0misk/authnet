@@ -44,10 +44,10 @@
     		  dataType: "json",
 			  url: "https://stark-fjord-22096.herokuapp.com/create_profile/" + transResponse['transId'],
 			  cache: false,
-			  success: function(data){
+			  success: function(data, response){
 			     console.log("CALLED")
-			     console.log(data);
-			     console.log(data['customerProfileId'])
+			     console.log(response);
+			     console.log(response['customerProfileId'])
 			  }
 			});
             // Use this to make a profile / subscription
