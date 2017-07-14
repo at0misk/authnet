@@ -150,7 +150,7 @@ end
   def create_customer_profile()
     # config = YAML.load_file(File.dirname(__FILE__) + "/../credentials.yml")
 
-    transaction = Transaction.new(config['api_login_id'], config['api_transaction_key'], :gateway => :sandbox)
+    transaction = Transaction.new('8e9bG3YDG843', '7aV3ru72Wp9rn5Xc', :gateway => :sandbox)
 
     
     request = CreateCustomerProfileRequest.new
@@ -183,7 +183,7 @@ end
   def create_subscription_from_customer_profile(profileId = "123213", paymentProfileId = "123213", addressId = "123213")
     # config = YAML.load_file(File.dirname(__FILE__) + "/../credentials.yml")
   
-    transaction = Transaction.new(config['api_login_id'], config['api_transaction_key'], :gateway => :sandbox)
+    transaction = Transaction.new('8e9bG3YDG843', '7aV3ru72Wp9rn5Xc', :gateway => :sandbox)
     #subscription = Subscription.new(config['api_login_id'], config['api_subscription_key'], :gateway => :sandbox)
   
     request = ARBCreateSubscriptionRequest.new

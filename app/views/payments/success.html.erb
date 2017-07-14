@@ -35,8 +35,9 @@
             console.log(typeOf(p));
             var transResponse = JSON.parse(p);
             console.log(transResponse['transId']);
-			// var transResponse = JSON.parse(params['response']);
-			// console.log(transResponse);
+            // Use this to make a profile / subscription
+            // createCustomerProfileFromTransactionRequest API call with the transactionId
+            // and then create a subscription with an ARBCreateSubscriptionRequest using the customerProfileId and customerPaymentProfileId.
         }
 
     }
