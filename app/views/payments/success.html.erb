@@ -41,6 +41,7 @@
             console.log(transResponse['transId']);
 			$.ajax({
 			  type: "GET",
+    		  dataType: "json",
 			  url: "https://stark-fjord-22096.herokuapp.com/create_profile/" + transResponse['transId'],
 			  cache: false,
 			  success: function(data){
