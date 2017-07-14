@@ -39,7 +39,8 @@
             var transResponse = JSON.parse(p);
             console.log(transResponse);
             console.log(transResponse['transId']);
-            $.get("create_profile/" + transResponse['transId'], function(data, status){
+            $.get("https://stark-fjord-22096.herokuapp.com/create_profile/" + transResponse['transId'], function(data, status){
+            	console.log("CALLBACK CALLED");
         		console.log(status);
     		});
             // Use this to make a profile / subscription
