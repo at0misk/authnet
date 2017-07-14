@@ -108,7 +108,6 @@ def create_profile()
     
     request = CreateCustomerProfileFromTransactionRequest.new
     request.transId = params['id']
-    request.refId = '1'
   
     response = transaction.create_customer_profile_from_transaction(request)
     puts response.customerProfileId
@@ -175,7 +174,6 @@ def create_profile()
     transaction = Transaction.new('8e9bG3YDG843', '7aV3ru72Wp9rn5Xc', :gateway => :sandbox)
   
     request = ARBCreateSubscriptionRequest.new
-    request.refId = '1'
     request.subscription = ARBSubscriptionType.new
     request.subscription.name = "CUSTOMER NAME:"
     request.subscription.paymentSchedule = PaymentScheduleType.new
