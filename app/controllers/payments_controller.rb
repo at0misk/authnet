@@ -51,11 +51,11 @@ require 'rubygems'
   def get_an_accept_payment_page()
     # config = YAML.load_file(File.dirname(__FILE__) + "/../credentials.yml")
 
-    transaction = Transaction.new('8e9bG3YDG843', '7aV3ru72Wp9rn5Xc', :gateway => :sandbox)
+    transaction = Transaction.new('9CPC3p3r8J', '89dmYyAdeYY6958b', :gateway => :sandbox)
     # !!!important Switch gateway to production in live mode !!!important
 
     transactionRequest = TransactionRequestType.new
-    transactionRequest.amount = 12.12
+    transactionRequest.amount = 79.00
     transactionRequest.transactionType = TransactionTypeEnum::AuthCaptureTransaction
     
     setting1 = SettingType.new
