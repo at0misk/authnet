@@ -72,7 +72,7 @@ require 'rubygems'
     
     setting3 = SettingType.new
     setting3.settingName = SettingNameEnum::HostedPaymentIFrameCommunicatorUrl
-    setting3.settingValue = "{\"url\": \"https://stark-fjord-22096.herokuapp.com/sign_success\"}"
+    setting3.settingValue = "{\"url\": \"http://34.212.207.30/\"}"
 
     setting4 = SettingType.new
     setting4.settingName = SettingNameEnum::HostedPaymentReturnOptions
