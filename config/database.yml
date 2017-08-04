@@ -7,7 +7,7 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  username: postgres
+  username: ubuntu
   pool: 5
   timeout: 5000
 
